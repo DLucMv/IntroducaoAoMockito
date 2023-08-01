@@ -39,4 +39,17 @@ public class CadastrarPessoasTeste {
         assertEquals(dadosLocalizacao.getUf(), enderecoJoao.getUf());
     }
 
+    @Test
+    void tentaCadastrarPessoaMasSistemaDosCorreiosFalha() {
+
+        Mockito.when(
+                apiCorreios.buscaDadosComBaseNoCep(anyString()))
+                .thenThrow(RuntimeException.class);
+
+        Assertions.assertThrows(
+                RuntimeException.class, () -> cadastrarPessoas.cadastrarPessoa(
+                        "João", "035.489.666-87", LocalDate.of(
+                                1933, 1, 21), "60790-820"));
+    }
+
 }
